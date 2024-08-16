@@ -54,6 +54,10 @@ public class TaskOperations {
         saveTasks();
     }
 
+    public List<Task> getTaskList() {
+        return tasks.values().stream().toList();
+    }
+
 
     private int getNewId() {
         return tasks.values().stream().toList().get(tasks.size() - 1).getId() + 1;

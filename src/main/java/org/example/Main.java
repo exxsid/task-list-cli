@@ -1,16 +1,12 @@
 package org.example;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Enter a command");
-            return;
-        }
-
-        if (args.length <= 1) {
-            System.out.println("Invalid input");
             return;
         }
 
@@ -69,8 +65,34 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case "list":
+                List<Task> tasks = taskOperations.getTaskList();
+                printTasks(tasks);
+                break;
             default:
                 System.out.println("Not registered command");
+        }
+    }
+
+    private static void printTasks(List<Task> tasks) {
+        String tableSpacingFormat = "%-5s %-30s %-10s %-30s %-30s\n";
+        System.out.printf(
+                tableSpacingFormat,
+                "ID",
+                "Description",
+                "Status",
+                "Created At",
+                "Updated At"
+        );
+        for (Task task : tasks) {
+            System.out.printf(
+                    tableSpacingFormat,
+                    task.getId(),
+                    task.getDescription(),
+                    task.getStatus(),
+                    task.getCreatedAt(),
+                    task.getUpdatedAt()
+            );
         }
     }
 }
