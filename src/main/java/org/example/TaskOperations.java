@@ -45,7 +45,7 @@ public class TaskOperations {
     }
 
     public void markInProgress(int id) throws IOException {
-        tasks.get(id).setStatus("in progress");
+        tasks.get(id).setStatus("in-progress");
         saveTasks();
     }
 

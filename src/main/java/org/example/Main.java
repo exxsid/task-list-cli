@@ -82,6 +82,15 @@ public class Main {
                     break;
                 }
 
+                //print all in-progress tasks
+                if (args[1].equals("in-progress")) {
+                    List<Task> inProgressTasks = taskOperations.getTaskList().stream()
+                            .filter(task -> task.getStatus().equals("in-progress"))
+                            .toList();
+                    printTasks(inProgressTasks);
+                    break;
+                }
+
                 break;
             default:
                 System.out.println("Not registered command");
@@ -89,6 +98,12 @@ public class Main {
     }
 
     private static void printTasks(List<Task> tasks) {
+        // when the list is empty print "No Task"
+        if (tasks.isEmpty()) {
+            System.out.println("No Task");
+            return;
+        }
+
         String tableSpacingFormat = "%-5s %-30s %-10s %-30s %-30s\n";
         System.out.printf(
                 tableSpacingFormat,
@@ -98,6 +113,7 @@ public class Main {
                 "Created At",
                 "Updated At"
         );
+
         for (Task task : tasks) {
             System.out.printf(
                     tableSpacingFormat,
