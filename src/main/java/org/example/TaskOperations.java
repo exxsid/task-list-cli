@@ -1,20 +1,19 @@
 package org.example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 public class TaskOperations {
 
     private static final String JSON_FILE_SOURCE = "src/main/resources/tasks.json";
 
-    private List<Task> tasks = TaskList.getTasks();
+    private Map<Integer, Task> tasks = TaskList.getTasks();
 
     public TaskOperations() throws IOException {
     }
@@ -24,19 +23,21 @@ public class TaskOperations {
         String now = LocalDateTime.now().format(formatter);
         int newId = getNewId();
         Task task = new Task(newId, description, "todo", now, now);
-        tasks.add(
-                task
-        );
+        tasks.put(newId, task);
 
         saveTasks();
 
         return newId;
     }
 
-    private static List<Task> getTasks() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(JSON_FILE_SOURCE,
-                mapper.getTypeFactory().constructCollectionType(List.class, Task.class));
+
+    public void updateTask (int id, String description) throws IOException {
+        String dateTimeNow = getDateTimeNow();
+
+        tasks.get(id).setDescription(description);
+        tasks.get(id).setUpdatedAt(dateTimeNow);
+
+        saveTasks();
     }
 
     private int getNewId() {
@@ -48,12 +49,21 @@ public class TaskOperations {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+        // convert map task list to list
+        List<Task> taskList = tasks.values().stream()
+                .toList();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         OutputStream outputStream = new FileOutputStream(JSON_FILE_SOURCE);
-        mapper.writeValue(out, tasks);
+        mapper.writeValue(out, taskList);
         out.writeTo(outputStream);
         outputStream.close();
+    }
+
+    private String getDateTimeNow() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
     }
 
 }

@@ -9,7 +9,7 @@ public class Main {
             return;
         }
 
-        if (args.length == 1) {
+        if (args.length <= 1) {
             System.out.println("Invalid input");
             return;
         }
@@ -23,13 +23,23 @@ public class Main {
 
         switch (args[0]) {
             case "add":
-
-
                 try {
                     int id = taskOperations.addTask(args[1]);
                     System.out.printf("Task added successfully (ID: %d)%n", id);
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
+                }
+                break;
+            case "update":
+                try {
+                    int id = Integer.parseInt(args[1]);
+                    String description = args[2];
+                    taskOperations.updateTask(id, description);
+                    System.out.println("Task updated successfully");
+                } catch (NumberFormatException e) {
+                    System.out.println("Enter a proper id number.");
+                } catch (IOException ioException) {
+                    System.out.println(ioException.getMessage());
                 }
                 break;
             default:
