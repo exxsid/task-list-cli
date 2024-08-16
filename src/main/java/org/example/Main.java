@@ -51,6 +51,15 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case "mark-in-progress":
+                try {
+                    int id = Integer.parseInt(args[1]);
+                    taskOperations.markInProgress(id);
+                    System.out.println("Task status successfully updated to 'in progress'");
+                } catch (NumberFormatException | IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
             default:
                 System.out.println("Not registered command");
         }

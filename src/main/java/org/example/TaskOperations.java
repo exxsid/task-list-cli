@@ -44,6 +44,12 @@ public class TaskOperations {
         saveTasks();
     }
 
+    public void markInProgress(int id) throws IOException {
+        tasks.get(id).setStatus("in progress");
+        saveTasks();
+    }
+
+
     private int getNewId() {
         return tasks.values().stream().toList().get(tasks.size() - 1).getId() + 1;
     }
