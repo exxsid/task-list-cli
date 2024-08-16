@@ -42,6 +42,15 @@ public class Main {
                     System.out.println(ioException.getMessage());
                 }
                 break;
+            case "delete":
+                try {
+                    int id = Integer.parseInt(args[1]);
+                    taskOperations.deleteTask(id);
+                    System.out.println("Task deleted successfully");
+                } catch (NumberFormatException | IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
             default:
                 System.out.println("Not registered command");
         }

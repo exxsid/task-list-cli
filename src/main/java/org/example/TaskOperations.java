@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class TaskOperations {
 
-    private static final String JSON_FILE_SOURCE = "src/main/resources/tasks.json";
 
     private Map<Integer, Task> tasks = TaskList.getTasks();
 
@@ -40,8 +39,13 @@ public class TaskOperations {
         saveTasks();
     }
 
+    public void deleteTask (int id) throws IOException {
+        tasks.remove(id);
+        saveTasks();
+    }
+
     private int getNewId() {
-        return tasks.get(tasks.size() - 1).getId() + 1;
+        return tasks.values().stream().toList().get(tasks.size() - 1).getId() + 1;
     }
 
     private void saveTasks() throws IOException {
