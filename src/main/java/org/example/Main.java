@@ -91,6 +91,15 @@ public class Main {
                     break;
                 }
 
+                // print all done tasks
+                if (args[1].equals("done")) {
+                    List<Task> inProgressTasks = taskOperations.getTaskList().stream()
+                            .filter(task -> task.getStatus().equals("done"))
+                            .toList();
+                    printTasks(inProgressTasks);
+                    break;
+                }
+
                 break;
             default:
                 System.out.println("Not registered command");
