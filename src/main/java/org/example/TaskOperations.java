@@ -49,6 +49,11 @@ public class TaskOperations {
         saveTasks();
     }
 
+    public void markDone(int id) throws IOException {
+        tasks.get(id).setStatus("done");
+        saveTasks();
+    }
+
 
     private int getNewId() {
         return tasks.values().stream().toList().get(tasks.size() - 1).getId() + 1;

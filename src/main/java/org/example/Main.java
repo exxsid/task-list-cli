@@ -60,6 +60,15 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case "mark-done":
+                try {
+                    int id = Integer.parseInt(args[1]);
+                    taskOperations.markDone(id);
+                    System.out.println("Task status successfully updated to 'done'");
+                } catch (NumberFormatException | IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
             default:
                 System.out.println("Not registered command");
         }
