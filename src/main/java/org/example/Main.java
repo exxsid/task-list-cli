@@ -66,8 +66,22 @@ public class Main {
                 }
                 break;
             case "list":
-                List<Task> tasks = taskOperations.getTaskList();
-                printTasks(tasks);
+                // print all the tasks
+                if (args.length == 1) {
+                    List<Task> tasks = taskOperations.getTaskList();
+                    printTasks(tasks);
+                    break;
+                }
+
+                // print the to do tasks
+                if(args[1].equals("todo")) {
+                    List<Task> todoTasks = taskOperations.getTaskList().stream()
+                            .filter(task -> task.getStatus().equals("todo"))
+                            .toList();
+                    printTasks(todoTasks);
+                    break;
+                }
+
                 break;
             default:
                 System.out.println("Not registered command");
